@@ -25,6 +25,12 @@ app.get('/transaction', (req, res) => {
   res.send(transaction);
 });
 
+app.get('/exo-query-string', (request, resultat) => {
+  let age = request.query.age;
+  let id = request.query.id;
+  resultat.send(`<h1>AGE: ${age} / ID: ${id}</h1>`);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
