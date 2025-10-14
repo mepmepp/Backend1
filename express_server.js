@@ -20,6 +20,8 @@ app.get('/some-json', (req, res) => {
 
 app.get('/transaction', (req, res) => {
   const transaction = [100, 2000, 3000];
+  console.log(`Headers: ${JSON.stringify(req.headers)}`);
+  console.log(`Body: ${req.body}`);
   res.send(transaction);
 });
 
