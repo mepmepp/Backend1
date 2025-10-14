@@ -18,6 +18,11 @@ app.get('/some-json', (req, res) => {
   res.json(someJson);
 });
 
+app.get('/transaction', (req, res) => {
+  const transaction = [100, 2000, 3000];
+  res.send(transaction);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
