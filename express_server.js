@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
@@ -30,6 +32,12 @@ app.get('/exo-query-string', (request, resultat) => {
   let id = request.query.id;
   resultat.send(`<h1>AGE: ${age} / ID: ${id}</h1>`);
 });
+
+app.post('/data', (request, resultat) => {
+  console.log(request.body);
+  resultat.json(request.body);
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
