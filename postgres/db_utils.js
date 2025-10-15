@@ -23,15 +23,6 @@ const getUsers = async(callback) => {
     await client.end();
 }
 
-// const requestEmails = async() => {
-//     const client = getConnection(username, password, database);
-//     await client.connect();
-    
-//     const emails = await client.query('SELECT email FROM users;');
-//     console.log(`Emails: ${JSON.stringify(emails.rows)}`);    
-//     await client.end();
-// }
-
 const insertUser = async(user, request, response) => {
     if (!user, !user.email) return "Invalid request";
 
