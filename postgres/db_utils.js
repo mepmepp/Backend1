@@ -1,4 +1,5 @@
 const { Client } = require('pg');
+require('dotenv').config();
 
 const username = 'postgres';
 const password = 'postgres';
@@ -35,6 +36,7 @@ const insertUser = async(user, request, response) => {
     } catch (error) {
         console.error('error', error);
     }
+
     await client.end();
 }
 
