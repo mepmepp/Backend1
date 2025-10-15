@@ -7,6 +7,7 @@ const port = 3000;
 app.use(verifyRequestBody);
 app.use(loggerMiddleware);
 app.use(express.json());
+app.use(express.static('templates'));
 
 const randomNumber = Math.floor(Math.random() * 100);
 let user1 = {
