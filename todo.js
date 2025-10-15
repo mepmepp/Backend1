@@ -9,8 +9,8 @@ app.use(express.json());
 var tasks = [];
 
 const main = () => {
-    app.get('/', getTasks);
-    app.get('/tasks', getTasks);
+    app.get('/', (request, response) => response.send(getTasks()));
+    app.get('/tasks', (request, response) => response.send(getTasks()));
     listenToPort();
 }
 
@@ -34,6 +34,7 @@ class Task {
 
 const getTasks = () => {
     if (tasks.length === 0) return "<h1>No tasks available</h1>";
+    const tasksToReturn = "";
 
     tasks.forEach((task) => {
         const isDone = task.isDone;
@@ -41,13 +42,15 @@ const getTasks = () => {
         if (isDone === true) isDone = "Task done.";
         else if (isDone === false) isDone = "Task not done yet.";
 
-        // arf
-        response.json(
-            `<h1>Todo-App</h1>
+        const tempTask = `<h1>Todo-App</h1>
             <h2>${task.title}</h2>
             <p>${task.description}</p>
-            <p>${isDone}</p>`);
+            <p>${isDone}</p>`;
+        
+        taskToReturn += tempTask;
     });
+
+    return taskToReturn;
 }
 
 const createNewTask = () => {
