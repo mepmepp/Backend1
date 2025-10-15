@@ -7,12 +7,12 @@ const port = 3000;
 app.use(verifyRequestBody);
 app.use(loggerMiddleware);
 app.use(express.json());
+app.use(express.static('public'));
 app.use(express.static('templates'));
 
+
 const randomNumber = Math.floor(Math.random() * 100);
-let user1 = {
-    'email': `meh${randomNumber}@test.com`
-}
+let user1 = { 'email': `meh${randomNumber}@test.com` }
 
 const main = () => {
     // app.post('/insert-user', (request, response) => insertUser(user, request, response));
