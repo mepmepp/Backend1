@@ -5,6 +5,18 @@ const loggerMiddleware = (request, response, next) => {
     next();
 }
 
+const verifyRequestBody = (request, response, next) => {
+    let object = {
+        name: 'I don\'t know',
+        usage: 'Not sure what it is for',
+        size: 'Somewhat variable',
+        color: 'Unclear'
+    }
+    console.log(object);
+    next();
+}
+
 module.exports = {
-    loggerMiddleware
+    loggerMiddleware,
+    verifyRequestBody
 };
