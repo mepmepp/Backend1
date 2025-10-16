@@ -1,11 +1,12 @@
 require('dotenv').config({path: '../variables.env'});
 const express = require('express');
-const { logRouteType, verifyAuthorization } = require('./middlewares');
+const { logRouteType, logHeader, firewall } = require('./middlewares');
 const app = express();
 const port = process.env.PORT;
 
 app.use(logRouteType);
-app.use(verifyAuthorization);
+app.use(logHeader);
+app.use(firewall);
 
 const main = () => {
     app.get('/', (request, response) => { response.send('<h1>Accueil</1>'); });
