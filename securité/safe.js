@@ -13,11 +13,7 @@ const main = () => {
     app.get('/hello', (request, response) => { response.send('<h1>Hello!</1>'); });
     app.get('/restricted1', (request, response) => { response.send('<h1>Restricted Area</h1>'); });
     app.get('/restricted2', (request, response) => { response.send('<h1>Admin Space</h1>'); });
-}
-
-
-const restrictedArea = () => {
-
+    app.post('/authenticate', (request, response) => {  });
 }
 
 app.listen(port, () => {
