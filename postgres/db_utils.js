@@ -1,22 +1,18 @@
 const { Client } = require('pg');
-require('dotenv').config();
+require('dotenv').config({path: '../variables.env'});
 
-const username = 'postgres';
-const password = 'postgres';
-const database = 'postgres';
-
-const getConnection = (username, password, database) => {
+const getConnection = () => {
     return new Client({
-        user: username,
-        password: password,
-        host: 'localhost',
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        host: process.env.HOST,
         port: 5432,
-        database: database,
+        database: process.env.DB,
     });
 }
 
 const getUsers = async(callback) => {
-    const client = getConnection(username, password, database);
+    const client = getConnection();
     await client.connect();
     
     const emails = await client.query('SELECT email FROM users;');
@@ -27,7 +23,7 @@ const getUsers = async(callback) => {
 const insertUser = async(user, request, response) => {
     if (!user, !user.email) return "Invalid request";
 
-    const client = getConnection(username, password, database);
+    const client = getConnection();
     await client.connect();
 
     try {
