@@ -1,3 +1,5 @@
+const { randomToken } = require('./utils');
+
 const logRouteType = (request, response, next) => {
     if (request.path.includes('restricted')) {
         console.log(`Route privée : ${request.path}`);
@@ -13,13 +15,30 @@ const logHeader = (request, response, next) => {
 }
 
 const verifyAuthorization = (request, response, next) => {
-    if (!request.path.includes('restricted')) return console.log(`Requête autorisée on ${request.path}`) && next();
+    if (!request.path.includes('restricted')) console.log(`Requête autorisée on ${request.path}`) && next();
 
+    const authorization = request.headers['authorization'];
+    let email = request.body.email;
+    console.log(randomToken);
+    let isRegistered = randomToken[email].includes(authorization);
+    console.log(authorization,isRegistered);
+
+    if (isRegistered) {
+        console.log(`Token d'authorization trouvé, requête autorisée.`);
+        return next();// on peut enlever ça si on cree des fonctions séparées (il passe par !token malgré un next nature)
+    }  
+    console.log("taatat");
     const token = request.headers['token'];
-    console.log('Token:', token);
+
+    if (!token) {
+       return response.status(403).json({error: 'Token non reçu.'});
+        
+    }
+
     if (Number(token) !== 42) {
         console.log(`Requête non autorisée on ${request.path}`)
-        return response.status(403).json({error: 'Requête non autorisée.'});
+        return response.status(403).json({error: 'Token non identique.'});
+        
     } 
 
     console.log(`Requête autorisée on ${request.path}`);
@@ -30,7 +49,8 @@ const firewall = (request, response, next) => {
     const nonRestrictedUrls = [
         '/',
         '/hello',
-        '/favicon.ico'
+        '/favicon.ico',
+        '/authenticate'
     ]
     
 
