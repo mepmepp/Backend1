@@ -1,3 +1,5 @@
+// TODO : hasher un password avec bcrypt
+
 require('dotenv').config({path: '../variables.env'});
 const express = require('express');
 const { logRouteType, logHeader, firewall } = require('./middlewares');
@@ -8,7 +10,7 @@ const port = process.env.PORT;
 
 app.use(express.json());
 app.use(logRouteType);
-app.use(logHeader);
+// app.use(logHeader);
 app.use(firewall);
 
 const main = () => {
@@ -18,15 +20,17 @@ const main = () => {
     app.get('/restricted2', (request, response) => { response.send('<h1>Admin Space</h1>'); });
 
     app.post('/authenticate', (request, response) => {
+
+        if (!request.body) response.status(404).send('Error fetching body');
+
         const { email, password } = request.body; 
-        if (!email || !password) {
-            response.status(404).send('Error fetching email et password');
-        };
-        console.log(`Tentative de login : ${email} -> ******* `);
+        if (!email || !password) response.status(404).send('Error fetching email et password');
+
+        console.log(`main - tentative de login : ${email} -> ******* `);
 
         randomToken[email] = generateToken(30);
-        console.log(randomToken[email]);
-        response.set('Authorization', randomToken[email]);
+        console.log(`main - token sent to header ${randomToken[email]}`);
+        response.set('Authorization', randomToken[email]).send();
 
 
     });
